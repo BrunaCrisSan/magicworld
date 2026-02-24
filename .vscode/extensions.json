@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    // ===== EXTENSÕES ESSENCIAIS =====
+    "PKief.material-icon-theme",
+    "rocketseat.theme-omni",
+    // ===== FRONTEND =====
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ritwickdey.LiveServer",
+    "naumovs.color-highlight",
+    "glenn2223.live-sass"
+  ]
+}

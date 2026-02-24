@@ -1,0 +1,111 @@
+{
+  // ======================
+  // GERAIS
+  // ======================
+  "editor.wordWrap": "on",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.tabCompletion": "on",
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "selection",
+  "editor.bracketPairColorization.enabled": false,
+  "files.autoSave": "afterDelay",
+  // ======================
+  // FONTE / UI
+  // ======================
+  "editor.fontFamily": "Consolas, 'Courier New', monospace",
+  "editor.fontSize": 12,
+  "editor.lineHeight": 18,
+  "editor.fontLigatures": false,
+  "editor.minimap.enabled": false,
+  "editor.minimap.renderCharacters": false,
+  "editor.colorDecorators": false,
+  "workbench.statusBar.visible": true,
+  "workbench.colorTheme": "Origamid Next",
+  // ======================
+  // EXPLORER / WINDOW
+  // ======================
+  "explorer.confirmDragAndDrop": false,
+  "explorer.sortOrder": "default",
+  "breadcrumbs.enabled": false,
+  "window.title": "${activeEditorMedium}${separator}${rootName}",
+  "window.newWindowDimensions": "inherit",
+  "diffEditor.renderSideBySide": true,
+  // ======================
+  // TERMINAL
+  // ======================
+  "terminal.integrated.fontSize": 12,
+  // ======================
+  // HTML
+  // ======================
+  "html.autoClosingTags": false,
+  "html.format.wrapAttributes": "auto",
+  "html.format.wrapLineLength": 0,
+  // ======================
+  // LIVE SERVER
+  // ======================
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  // ======================
+  // PRIVACIDADE
+  // ======================
+  "telemetry.telemetryLevel": "off",
+  "cSpell.enabled": false,
+  // ======================
+  // PRETTIER (React + JSX)
+  // ======================
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": false,
+  "prettier.trailingComma": "all",
+  "prettier.bracketSameLine": false,
+  "prettier.printWidth": 80,
+  // ======================
+  // ESLINT
+  // ======================
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  // ======================
+  // REACT (.js com JSX)
+  // ======================
+  "files.associations": {
+    "*.js": "javascriptreact"
+  },
+  // ======================
+  // ======================
+  // FORMATADORES
+  // ======================
+  "[javascript]": {
+    "editor.defaultFormatter": null,
+    "editor.tabSize": 2
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": null,
+    "editor.tabSize": 2
+  },
+  "[html]": {
+    "editor.defaultFormatter": null,
+    "editor.tabSize": 2
+  },
+  "[css]": {
+    "editor.defaultFormatter": null,
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.defaultFormatter": null,
+    "editor.tabSize": 2
+  },
+  // ======================
+  // TAILWIND CSS
+  // ======================
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+
+  "tailwindCSS.emmetCompletions": true
+
+  
+}
