@@ -51,10 +51,6 @@ function Home({ onClick = () => { }, children, className = '' }) {
               </div>
             </div>
           </div>
-
-          <p className="text-white/50 text-sm animate-pulse">
-            👆 Clique no personagem para trocar!
-          </p>
         </div>
 
         {/* Cards de informações */}
