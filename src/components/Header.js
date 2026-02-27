@@ -1,7 +1,7 @@
 // src/components/Header.js
 import React from 'react';
 
-const Header = () => {
+const Header = ({ stars }) => {  // 👈 SÓ ADICIONA ISSO
   return (
     <header className="w-full py-4 px-6 bg-gradient-to-r from-purple-600 to-blue-600 shadow-lg">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -16,10 +16,10 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Estrelas/Pontos */}
+        {/* Estrelas/Pontos - AGORA DINÂMICO */}
         <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
           <span className="text-yellow-300 text-2xl">⭐</span>
-          <span className="text-white font-bold text-xl">150</span>
+          <span className="text-white font-bold text-xl">{stars}</span> {/* SÓ MUDA AQUI */}
           <span className="text-white/80 text-sm ml-1">pontos</span>
         </div>
       </div>
