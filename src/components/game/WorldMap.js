@@ -97,7 +97,7 @@ const WorldMap = () => {
             </h1>
             <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
           </div>
-          
+
           {/* SUBTÍTULO */}
           <p className="text-white/60 text-xs xs:text-sm sm:text-base mt-2 font-light tracking-wider">
             Escolha seu desafio e avance na aventura!
@@ -134,7 +134,7 @@ const WorldMap = () => {
                     <span className="text-base xs:text-lg sm:text-xl font-bold">
                       {level.id}
                     </span>
-                    
+
                     <span className="hidden xs:inline text-[10px] xs:text-xs sm:text-sm font-medium opacity-90">
                       {range.start}-{range.end}
                     </span>
@@ -169,7 +169,7 @@ const WorldMap = () => {
                       bg-gradient-to-r from-amber-400/30 via-yellow-400/30 to-orange-400/30 
                       rounded-full blur-md">
         </div>
-        
+
         <div className="absolute w-[85%] xs:w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] xl:w-[60%] 
                       h-0.5 xs:h-1 sm:h-1.5 
                       bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 
@@ -198,7 +198,7 @@ const WorldMap = () => {
                     bg-gradient-to-r from-yellow-400/50 to-orange-400/50 
                     transform -translate-y-1/2
                   `} />
-                  
+
                   {/* Brilho pulsante */}
                   <div className={`
                     absolute top-1/2 
@@ -217,8 +217,8 @@ const WorldMap = () => {
                 onClick={() => handleLevelClick(level)}
                 className={`
                   cursor-pointer transition-all duration-500
-                  ${level.status === 'bloqueado' 
-                    ? 'opacity-50 cursor-not-allowed filter grayscale' 
+                  ${level.status === 'bloqueado'
+                    ? 'opacity-50 cursor-not-allowed filter grayscale'
                     : 'hover:scale-125 hover:-translate-y-2 hover:rotate-3'
                   }
                   relative group
@@ -256,7 +256,7 @@ const WorldMap = () => {
         >
           {/* Efeito de brilho */}
           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 group-hover:animate-shimmer"></div>
-          
+
           <span className="relative z-10 text-base sm:text-xl">🏠</span>
           <span className="relative z-10 hidden sm:inline">Home</span>
         </button>
@@ -298,45 +298,6 @@ const WorldMap = () => {
           <span className="animate-bounce delay-150">👉</span>
         </p>
       </div>
-
-      {/* CSS PARA ANIMAÇÕES */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-        }
-        @keyframes float-slower {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 1; }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-        .animate-float-slow {
-          animation: float-slow 4s ease-in-out infinite;
-        }
-        .animate-float-slower {
-          animation: float-slower 5s ease-in-out infinite;
-        }
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-        .animate-twinkle {
-          animation: twinkle 3s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 };
