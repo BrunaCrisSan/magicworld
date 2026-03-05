@@ -1,156 +1,262 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
 import Header from '../components/Header';
 import Card from '../components/game/Card';
 import AnswerArea from '../components/game/AnswerArea';
 import DifficultyIndicator from '../components/game/DifficultyIndicator';
 
-// Versão simplificada do generateChallenge para teste
-function generateChallenge(difficulty) {
-  const max = difficulty === 1 ? 5 : difficulty === 2 ? 10 : 20;
-  const a = Math.floor(Math.random() * max) + 1;
-  const b = Math.floor(Math.random() * max) + 1;
-  const correct = a + b;
+
+function generateChallenge(level, difficulty) {
+
+  const min = (level - 1) * 50 + 1;
+  const max = level * 50;
+
+  let range;
+
+  switch (difficulty) {
+    case 1:
+      range = { min, max: min + 20 };
+      break;
+
+    case 2:
+      range = { min: min + 15, max: max - 15 };
+      break;
+
+    case 3:
+      range = { min: max - 20, max };
+      break;
+
+    default:
+      range = { min, max };
+  }
+
+  const safeMin = Math.max(range.min, min);
+  const safeMax = Math.min(range.max, max);
+
+  const a = Math.floor(Math.random() * (safeMax - safeMin + 1)) + safeMin;
+  const b = Math.floor(Math.random() * (safeMax - safeMin + 1)) + safeMin;
+  const c = Math.floor(Math.random() * (safeMax - safeMin + 1)) + safeMin;
+
+  const correct = a + b + c;
+
+  const options = [
+    correct,
+    correct + Math.floor(Math.random() * 5) + 1,
+    Math.max(1, correct - (Math.floor(Math.random() * 5) + 1)),
+    correct + Math.floor(Math.random() * 10) + 2
+  ].sort(() => Math.random() - 0.5);
 
   return {
     a,
     b,
+    c,
     correctAnswer: correct,
-    options: [correct - 1, correct, correct + 1, correct + 2].filter(n => n > 0),
+    options: options.slice(0, 4),
+    faixa: { min, max }
   };
 }
 
 const ChallengePage = () => {
+
+  const navigate = useNavigate();
   const { levelId } = useParams();
+
+  const level = parseInt(levelId) || 1;
 
   const [difficulty, setDifficulty] = useState(1);
   const [correctCount, setCorrectCount] = useState(0);
-  const [challenge, setChallenge] = useState(() => generateChallenge(difficulty));
+
+  const [challenge, setChallenge] = useState(() =>
+    generateChallenge(level, difficulty)
+  );
+
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [result, setResult] = useState(null);
+
   const [stars, setStars] = useState(0);
   const [attempts, setAttempts] = useState(0);
+
   const [showStarAnimation, setShowStarAnimation] = useState(false);
+  const [lastStarsEarned, setLastStarsEarned] = useState(0);
+
+
+  useEffect(() => {
+    setChallenge(generateChallenge(level, difficulty));
+    setSelectedAnswer(null);
+    setResult(null);
+    setAttempts(0);
+  }, [level, difficulty]);
+
 
   const handleContinue = () => {
-    if (selectedAnswer === null) return;
+
+    if (selectedAnswer == null || !challenge) return;
+
+    const answer = Number(selectedAnswer);
 
     const newAttempts = attempts + 1;
     setAttempts(newAttempts);
 
-    if (selectedAnswer === challenge.correctAnswer) {
-      let starsEarned = 0;
-      if (newAttempts === 1) {
-        starsEarned = 2;
-      } else {
-        starsEarned = 1;
-      }
+    if (answer === challenge.correctAnswer) {
+
+      const starsEarned = newAttempts === 1 ? 2 : 1;
 
       setStars(prev => prev + starsEarned);
+      setLastStarsEarned(starsEarned);
+
       setShowStarAnimation(true);
-      setTimeout(() => setShowStarAnimation(false), 1000);
 
-      const newCorrectCount = correctCount + 1;
-      setCorrectCount(newCorrectCount);
+      setTimeout(() => {
+        setShowStarAnimation(false);
+      }, 1000);
 
-      if (newCorrectCount % 2 === 0 && difficulty < 3) {
-        setDifficulty(difficulty + 1);
-      }
+      setCorrectCount(prev => prev + 1);
 
-      setResult('success');
+      setResult("success");
+
     } else {
-      setResult('try-again');
+
+      setResult("try-again");
+
     }
+
   };
 
   const handleNextChallenge = () => {
-    setChallenge(generateChallenge(difficulty));
+
+    setChallenge(generateChallenge(level, difficulty));
     setSelectedAnswer(null);
     setResult(null);
     setAttempts(0);
+
   };
 
+
+  const changeDifficulty = (newDifficulty) => {
+
+    setDifficulty(newDifficulty);
+
+  };
+
+
   return (
-    <div className="h-screen bg-gradient-to-b from-sky-100 to-purple-100 flex flex-col">
-      {/* ANIMAÇÃO DE GANHO DE ESTRELAS */}
-      {showStarAnimation && (
-        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-float-star">
-          <div className="bg-yellow-400 text-yellow-800 px-6 py-3 rounded-full text-2xl font-bold shadow-lg">
-            +⭐
-          </div>
-        </div>
-      )}
 
-      <Header stars={stars} />
+    <div className="min-h-screen bg-gradient-to-b from-indigo-100 via-purple-100 to-pink-100 flex flex-col relative">
 
-      {/* INDICADORES SUPERIORES - VERSÃO RESPONSIVA */}
-      <div className="absolute top-20 left-2 right-2 flex justify-between items-start px-2 z-10">
-        {/* Lado esquerdo - Dificuldade */}
-        <div className="w-1/2 sm:w-auto">
-          <DifficultyIndicator difficulty={difficulty} correctCount={correctCount} />
+      <Header stars={stars} level={level} />
+
+      {/* Indicadores */}
+      <div className="absolute top-20 left-2 right-2 flex justify-between items-start mt-4 px-2 z-10">
+
+        <div
+          className="cursor-pointer hover:scale-105 transition-transform"
+          onClick={() => {
+
+            const next = difficulty === 3 ? 1 : difficulty + 1;
+            changeDifficulty(next);
+
+          }}
+        >
+          <DifficultyIndicator
+            difficulty={difficulty}
+            correctCount={correctCount}
+          />
         </div>
 
-        {/* Lado direito - Tentativas e Acertos */}
-        <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-lg border border-purple-200 text-xs sm:text-sm">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <span className="text-purple-600">🔄</span>
-              <span className="text-purple-800 font-medium">{attempts}</span>
-              <span className="text-purple-500 text-[10px] sm:text-xs hidden xs:inline">tentativas</span>
-            </div>
-            <div className="w-px h-4 bg-purple-200"></div>
-            <div className="flex items-center gap-1">
-              <span className="text-purple-600">✅</span>
-              <span className="text-purple-800 font-medium">{correctCount}</span>
-              <span className="text-purple-500 text-[10px] sm:text-xs hidden xs:inline">acertos</span>
-            </div>
-          </div>
+        <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl shadow-xl border-2 border-purple-200 flex items-center gap-3">
+
+          <span className="text-purple-600 bg-purple-100 p-1.5 rounded-full text-sm font-bold">
+            📊 {level}
+          </span>
+
+          <span className="text-blue-600 bg-blue-100 p-1.5 rounded-full text-sm font-bold">
+            🔢 {challenge.faixa.min}-{challenge.faixa.max}
+          </span>
+
+          <span className="text-green-600 bg-green-100 p-1.5 rounded-full text-sm font-bold">
+            🔄 {attempts}
+          </span>
+
         </div>
+
       </div>
 
-      {/* Card */}
-      <div className="flex-1 flex items-center justify-center p-4 pt-24 sm:pt-20">
+
+      {showStarAnimation && (
+
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-float-star">
+
+          <div className="bg-gradient-to-r from-yellow-300 to-yellow-500 text-yellow-800 px-8 py-4 rounded-full text-3xl font-bold shadow-2xl border-4 border-white">
+
+            ⭐ +{lastStarsEarned}
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      <div className="flex-1 flex items-center justify-center p-4 pt-28 sm:pt-24">
+
         <Card
           challenge={challenge}
           selectedAnswer={selectedAnswer}
           onSelectAnswer={setSelectedAnswer}
           result={result}
         />
+
       </div>
 
-      {/* AnswerArea */}
+
       <div className="py-6 px-4">
-        <AnswerArea
-          selectedAnswer={selectedAnswer}
-          onSelectAnswer={setSelectedAnswer}
-          result={result}
-          onContinue={handleContinue}
-          onNextChallenge={handleNextChallenge}
-          challenge={challenge}
-        />
+
+        <div className="py-6 px-4">
+          <AnswerArea
+            selectedAnswer={selectedAnswer}
+            onSelectAnswer={setSelectedAnswer}  // 👈 ADICIONE ESTA LINHA!
+            result={result}
+            onContinue={handleContinue}
+            onNextChallenge={handleNextChallenge}
+            challenge={challenge}
+          />
+        </div>
+
       </div>
 
-      {/* CSS para animação */}
-      <style>{`
-        @keyframes float-star {
-          0% {
-            opacity: 1;
-            transform: translate(-50%, 0) scale(1);
-          }
-          50% {
-            opacity: 1;
-            transform: translate(-50%, -20px) scale(1.2);
-          }
-          100% {
-            opacity: 0;
-            transform: translate(-50%, -40px) scale(0.8);
-          }
-        }
-        
-        .animate-float-star {
-          animation: float-star 1s ease-out forwards;
-        }
-      `}</style>
+
+      <div className="fixed bottom-4 left-4 right-4 flex justify-between z-20">
+        <button
+          onClick={() => navigate('/')}
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 
+             text-white font-bold 
+             py-1 px-2 sm:py-1.5 sm:px-3  // 👈 BEM MENOR
+             rounded-full shadow-lg  // 👈 Sombra reduzida
+             flex items-center gap-0.5 sm:gap-1  // 👈 Gap mínimo
+             text-xs sm:text-sm  // 👈 Fonte pequena
+             border border-white/40"  // 👈 Borda mais fina
+        >
+          <span className="text-sm sm:text-base">🏠</span>
+          <span className="hidden sm:inline">Home</span>
+        </button>
+
+        <button
+          onClick={() => navigate('/game')}
+          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600
+             text-white font-bold 
+             py-1 px-2 sm:py-1.5 sm:px-3  // 👈 BEM MENOR
+             rounded-full shadow-lg  // 👈 Sombra reduzida
+             flex items-center gap-0.5 sm:gap-1  // 👈 Gap mínimo
+             text-xs sm:text-sm  // 👈 Fonte pequena
+             border border-white/40"  // 👈 Borda mais fina
+        >
+          <span className="text-sm sm:text-base">🗺️</span>
+          <span className="hidden sm:inline">Mapa</span>
+        </button>
+      </div>
+
+
     </div>
   );
 };

@@ -14,40 +14,31 @@ const DifficultyIndicator = ({ difficulty, correctCount }) => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-3 
-                    bg-white/80 backdrop-blur-sm p-2 sm:px-4 sm:py-2 
-                    rounded-lg sm:rounded-full shadow-lg border border-purple-200
-                    max-w-[180px] sm:max-w-none text-xs sm:text-sm">
+    <div className="flex flex-col xs:flex-row items-start xs:items-center gap-1 xs:gap-2 
+                bg-white/80 backdrop-blur-sm mt-2 px-2 xs:px-3 py-1.5 
+                rounded-lg xs:rounded-full shadow-lg border border-purple-200 
+                text-[10px] xs:text-xs w-full xs:w-auto">
 
-      {/* Linha 1: Estrelas + Dificuldade (sempre junto no mobile) */}
-      <div className="flex items-center justify-between w-full sm:w-auto gap-1">
-        {/* Estrelas */}
+      {/* Estrelas e dificuldade */}
+      <div className="flex items-center justify-between w-full xs:w-auto gap-1">
         <div className="flex items-center gap-0.5">
-          <span className="text-purple-600 font-medium mr-0.5">⭐</span>
-          <div className="flex gap-0">
+          <span className="text-purple-600 mr-0.5">⭐</span>
+          <div className="flex">
             {[1, 2, 3].map((star) => (
-              <span
-                key={star}
-                className={`text-sm ${star <= difficulty ? 'text-yellow-400' : 'text-gray-300'}`}
-              >
-                ★
-              </span>
+              <span key={star} className={`text-xs xs:text-sm ${star <= difficulty ? 'text-yellow-400' : 'text-gray-300'}`}>★</span>
             ))}
           </div>
         </div>
-
-        {/* Nome da dificuldade simplificado */}
-        <div className={`bg-gradient-to-r ${difficultyColors[difficulty]} 
-                        text-white px-2 py-0.5 rounded-full text-[10px] font-bold`}>
+        <span className={`bg-gradient-to-r ${difficultyColors[difficulty]} text-white px-1.5 py-0.5 rounded-full text-[8px] xs:text-[9px] font-bold`}>
           {difficultyNames[difficulty]}
-        </div>
+        </span>
       </div>
 
-      {/* Linha 2: Acertos (sempre visível) */}
-      <div className="flex items-center gap-1 w-full sm:w-auto">
+      {/* Acertos */}
+      <div className="flex items-center justify-between xs:justify-start w-full xs:w-auto gap-1 xs:border-l xs:border-purple-200 xs:pl-2">
         <span className="text-purple-600">✅</span>
         <span className="text-purple-800 font-bold">{correctCount}</span>
-        <span className="text-purple-500 text-[10px]">acertos</span>
+        <span className="text-purple-500 text-[8px] xs:text-[9px]">acertos</span>
       </div>
     </div>
   );
