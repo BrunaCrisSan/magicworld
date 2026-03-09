@@ -169,25 +169,6 @@ const Level = ({ number, status = 'bloqueado' }) => {
         </span>
       </div>
 
-      {/* Dica animada para ativo */}
-      {status === 'ativo' && (
-        <div className="absolute -bottom-6 xs:-bottom-7 sm:-bottom-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-          <span className="
-            inline-block
-            px-2 py-0.5
-            bg-gradient-to-r from-yellow-400 to-orange-400
-            rounded-full
-            text-[6px] xs:text-[8px] sm:text-[10px]
-            font-bold text-white
-            animate-bounce
-            shadow-lg
-            border border-white/30
-          ">
-            👆 CLIQUE AQUI!
-          </span>
-        </div>
-      )}
-
       {/* Efeito de brilho no hover para não bloqueados */}
       {status !== 'bloqueado' && (
         <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl pointer-events-none" />

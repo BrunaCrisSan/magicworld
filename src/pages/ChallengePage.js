@@ -146,16 +146,16 @@ const ChallengePage = () => {
 
       <Header stars={stars} level={level} />
 
-      {/* Indicadores */}
-      <div className="absolute top-20 left-2 right-2 flex justify-between items-start mt-4 px-2 z-10">
+      {/* Indicadores - AGORA POSICIONADOS CORRETAMENTE */}
+      {/* Indicadores - VERSÃO SÓ ÍCONES NO MOBILE */}
+      <div className="relative w-full max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-4 mb-2 sm:mb-4 flex justify-between items-center z-10">
 
+        {/* Lado esquerdo - Dificuldade */}
         <div
-          className="cursor-pointer hover:scale-105 transition-transform"
+          className="cursor-pointer hover:scale-105 transition-transform scale-75 sm:scale-100 origin-left"
           onClick={() => {
-
             const next = difficulty === 3 ? 1 : difficulty + 1;
             changeDifficulty(next);
-
           }}
         >
           <DifficultyIndicator
@@ -164,18 +164,25 @@ const ChallengePage = () => {
           />
         </div>
 
-        <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl shadow-xl border-2 border-purple-200 flex items-center gap-3">
+        {/* Lado direito - Informações SÓ ÍCONES no mobile */}
+        <div className="bg-white/90 backdrop-blur-md px-1.5 py-1 sm:px-4 sm:py-2 rounded-xl sm:rounded-2xl shadow-md sm:shadow-xl border border-purple-200 sm:border-2 flex items-center gap-0.5 sm:gap-3">
 
-          <span className="text-purple-600 bg-purple-100 p-1.5 rounded-full text-sm font-bold">
-            📊 {level}
+          {/* Nível */}
+          <span className="flex items-center justify-center text-purple-600 bg-purple-100 p-1.5 rounded-full sm:rounded-lg text-xs sm:text-sm font-bold w-7 h-7 sm:w-auto sm:h-auto">
+            <span className="text-sm sm:text-base">📊</span>
+            <span className="hidden sm:inline ml-1">{level}</span>
           </span>
 
-          <span className="text-blue-600 bg-blue-100 p-1.5 rounded-full text-sm font-bold">
-            🔢 {challenge.faixa.min}-{challenge.faixa.max}
+          {/* Faixa */}
+          <span className="flex items-center justify-center text-blue-600 bg-blue-100 p-1.5 rounded-full sm:rounded-lg text-xs sm:text-sm font-bold w-7 h-7 sm:w-auto sm:h-auto">
+            <span className="text-sm sm:text-base">🔢</span>
+            <span className="hidden sm:inline ml-1">{challenge.faixa.min}</span>
           </span>
 
-          <span className="text-green-600 bg-green-100 p-1.5 rounded-full text-sm font-bold">
-            🔄 {attempts}
+          {/* Tentativas */}
+          <span className="flex items-center justify-center text-green-600 bg-green-100 p-1.5 rounded-full sm:rounded-lg text-xs sm:text-sm font-bold w-7 h-7 sm:w-auto sm:h-auto">
+            <span className="text-sm sm:text-base">🔄</span>
+            <span className="hidden sm:inline ml-1">{attempts}</span>
           </span>
 
         </div>

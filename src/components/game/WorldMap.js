@@ -289,9 +289,9 @@ const WorldMap = () => {
       <div className="absolute top-40 left-8 text-3xl xs:text-4xl sm:text-5xl text-white/5 animate-float">✨</div>
 
       {/* INSTRUÇÃO FLUTUANTE */}
-      <div className="absolute bottom-16 xs:bottom-20 left-1/2 transform -translate-x-1/2 
-                    bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full
-                    border border-white/20 shadow-xl">
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 
+                bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full
+                border border-white/20 shadow-xl">
         <p className="text-white/80 text-[10px] xs:text-xs sm:text-sm font-medium flex items-center gap-2">
           <span className="animate-bounce">👆</span>
           <span>Clique nos níveis disponíveis para começar!</span>

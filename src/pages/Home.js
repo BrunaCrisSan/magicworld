@@ -186,12 +186,8 @@ function Home({ className = '' }) {
 
         {/* Footer animado */}
         <div className="flex items-center justify-center gap-4 pt-3 sm:pt-6">
-          <span className="text-sm sm:text-base text-white bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-            🎯 3 + 2 = ?
-          </span>
-          <span className="text-sm sm:text-base text-white bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-            🐶 + 🐯 = 🦁
-          </span>
+
+
           <div className="flex gap-1">
             <span className="animate-bounce inline-block text-2xl">🐶</span>
             <span className="animate-bounce delay-100 inline-block text-2xl">🐯</span>
